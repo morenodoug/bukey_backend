@@ -9,7 +9,7 @@ let userSchema = new moongose.Schema({
     email:{
         type: String,
         unique: true,
-        required:[true, "nombre necesario"]
+        required:[true, "email necesario"]
     },
     password:{
         type: String,

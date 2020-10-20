@@ -13,10 +13,10 @@ function generateUrlDatabaseConnection(){
 }
 
 // jsonwebtoken
-const secret = 'hamburguesas';
-
+const jwtSecret = 'hamburguesas';
+const valid_hours = 24
 const optionsJWT = {
-    expiresIn: Math.floor(Date.now() / 1000) + (60 * 60),
+    expiresIn:24*60*60,
 }
 
 //bcrypt
@@ -24,7 +24,7 @@ const saltRounds = 10;
 
 module.exports = {
     databaseConnection: generateUrlDatabaseConnection(),
-    secret: secret,
+    jwtSecret: jwtSecret,
     optionsJWT: optionsJWT,
     saltRounds: saltRounds
 }
