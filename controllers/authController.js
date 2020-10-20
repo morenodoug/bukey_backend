@@ -1,6 +1,6 @@
 const isEmail = require("isemail")
 const User =require("../models/user")
-//const bcrypt = require("bcrypt")
+const passwordManager = require("../utils/passwordManager")
 function signUp(req,res, next) {
 
     if(req.body.email == undefined || !isEmail.validate(req.body.email)){
@@ -18,7 +18,7 @@ function signUp(req,res, next) {
     let usuario = new User({
         nombre: req.body.name ,
         email: req.body.email,
-        password:   req.body.password
+        password:   passwordManager.encryptPassword(req.body.password)
     })
 
     usuario.save((err, usuarioDB) =>{
