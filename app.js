@@ -6,7 +6,11 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var authRouter = require("./route/auth")
+const authRouter = require("./routes/auth")
+const mongoose  = require("mongoose")
+const config = require("./config")
+const bodyParser = require('body-parser');
+const { throws } = require('assert');
 
 var app = express();
 
@@ -15,14 +19,24 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+console.log(config.databaseConnection)
+
+mongoose.connect(config.databaseConnection, { useNewUrlParser: true,useUnifiedTopology: true })
+.then(() =>console.log("conexion a bd exitosa"))
+.catch ( (error)  =>  {throw error})
+mongoose.set('useCreateIndex', true);
+
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use("/auth")
+
+app.use("/auth" , authRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
