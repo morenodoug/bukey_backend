@@ -7,10 +7,7 @@ function generateToken(payload){
 
 }
 
-function validateToken(paylaod){
 
-    
-}
 
 module.exports ={
      generateToken

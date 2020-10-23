@@ -12,6 +12,7 @@ const config = require("./config")
 const bodyParser = require('body-parser');
 const { throws } = require('assert');
 const cors = require("cors")
+const authmiddleware = require("./middlewares/authMiddleware")
 var app = express();
 
 // view engine setup
@@ -33,9 +34,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
+app.use("/auth" , authRouter)
+app.use(authmiddleware)
 app.use('/', indexRouter);
 
-app.use("/auth" , authRouter)
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
