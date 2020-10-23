@@ -11,7 +11,7 @@ const mongoose  = require("mongoose")
 const config = require("./config")
 const bodyParser = require('body-parser');
 const { throws } = require('assert');
-
+const cors = require("cors")
 var app = express();
 
 // view engine setup
@@ -19,8 +19,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
+
 console.log(config.databaseConnection)
 
 mongoose.connect(config.databaseConnection, { useNewUrlParser: true,useUnifiedTopology: true })
@@ -33,7 +32,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(cors());
 app.use('/', indexRouter);
 
 app.use("/auth" , authRouter)

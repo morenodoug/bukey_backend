@@ -34,21 +34,14 @@ async function signIn(req,res, next){
             return res.status(401).json({})
         }
         
-
-
     }catch(err){
         
         if(err instanceof NotFoundError){
-            return res.status(404).json(err)
+            return res.status(err.status).json(err)
         }
         console.log(err)
         return res.status(500).json(err)
-        
-
-
     }
-
-
 }
 async function  signUp(req,res, next) {
     if(req.body.email == undefined || !isEmail.validate(req.body.email)){
@@ -76,7 +69,7 @@ async function  signUp(req,res, next) {
     }catch(err){
         console.error(err)
         if(err instanceof EmailInUseError){
-            res.status(400)
+            res.status(err.status)
         }else{
             res.status(500)
         }
