@@ -1,10 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const  userController = require("../controllers/userController")
 
 /* GET home page. */
-router.post('/', function(req, res, next) {
-  console.log(`decode ${req.decoded.userId}`);
-  res.json(req.decoded)
-});
+router.post('/',  userController.user);
 
 module.exports = router;

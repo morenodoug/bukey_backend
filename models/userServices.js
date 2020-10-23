@@ -3,8 +3,20 @@ const EmailInUseError = require("../aplicationErrors/EmailInUseError")
 const NotFoundError = require("../aplicationErrors/NotFoundError")
 const GeneralError = require("../aplicationErrors/GeneralError")
 
+function findAnotherUsers( userId){
 
-
+    return new Promise((resolve, reject) =>{
+        User.find({'_id': {$ne: userId}}, (err, users) =>{
+            if(err){
+                console.error(err)
+                return reject( new GeneralError())
+            }
+            if(users == null )
+                return reject(new NotFoundError("user not found")) 
+            return resolve(users)            
+        } )
+    })
+}
 
 function  findUserByEmail( email) {
 
@@ -58,5 +70,6 @@ function formatUserToSend(userCreated){
 module.exports ={
     addNewUser,
     findUserByEmail,
-    formatUserToSend
+    formatUserToSend,
+    findAnotherUsers
 }

@@ -36,7 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use("/auth" , authRouter)
 app.use(authmiddleware)
-app.use('/', indexRouter);
+app.use('/user', indexRouter);
 
 
 
