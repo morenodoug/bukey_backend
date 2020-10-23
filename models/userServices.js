@@ -47,7 +47,6 @@ function addNewUser(name, email,password){
 
 function formatUserToSend(userCreated){
     let user ={}
-    console.log(Object.keys(userCreated))
     user.nombre = userCreated.nombre
     user.email = userCreated.email
     user.estado = userCreated.estado
