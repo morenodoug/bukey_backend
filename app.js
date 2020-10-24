@@ -4,7 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const authRouter = require("./routes/auth")
 const mongoose  = require("mongoose")
@@ -36,7 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use("/auth" , authRouter)
 app.use(authmiddleware)
-app.use('/user', indexRouter);
+app.use('/user', usersRouter);
 
 
 

@@ -3,6 +3,21 @@ const EmailInUseError = require("../aplicationErrors/EmailInUseError")
 const NotFoundError = require("../aplicationErrors/NotFoundError")
 const GeneralError = require("../aplicationErrors/GeneralError")
 
+
+function findUserById(userId){
+
+    return new Promise((resolve, reject) =>{
+        User.findOne({'_id':  userId}, (err, user) =>{
+            if(err){
+                console.error(err)
+                return reject( new GeneralError())
+            }
+            if(user == null )
+                return reject(new NotFoundError("user not found")) 
+            return resolve(user)            
+        } )
+    })    
+}
 function findAnotherUsers( userId){
 
     return new Promise((resolve, reject) =>{
@@ -40,8 +55,6 @@ function addNewUser(name, email,password){
         
     })
     return new Promise((resolve, reject) =>{
-
-
         usuario.save((err, userCreated) =>{
             if(err && err.code ===11000){
                 
@@ -71,5 +84,6 @@ module.exports ={
     addNewUser,
     findUserByEmail,
     formatUserToSend,
-    findAnotherUsers
+    findAnotherUsers,
+    findUserById
 }
