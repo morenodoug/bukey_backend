@@ -11,6 +11,7 @@ const config = require("./config")
 const bodyParser = require('body-parser');
 const { throws } = require('assert');
 const cors = require("cors")
+const serverIo = require("socket.io")
 const authmiddleware = require("./middlewares/authMiddleware")
 var app = express();
 
@@ -37,7 +38,30 @@ app.use("/auth" , authRouter)
 app.use(authmiddleware)
 app.use('/user', usersRouter);
 
+const io = new serverIo(5000,{
+  path:"",
+  serveClient: false,
+  // below are engine.IO options
+  pingInterval: 10000,
+  pingTimeout: 5000,
+  cookie: false
+})
+let connectedUsers = {};
+io.on("connection", (socket) =>{
+  console.log("user connected")
+  let userId = socket.handshake.query.userId;
+  console.log(userId);
+  
+  connectedUsers[userId] = socket
+  console.log("connected ysers")
+  console.log(connectedUsers)
 
+
+  socket.on('conversation-message', (msg) => {
+    console.log("receive")
+    console.log(msg);
+  });
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
