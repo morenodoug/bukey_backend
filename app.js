@@ -48,7 +48,7 @@ const io = new serverIo(5000,{
 })
 let connectedUsers = {};
 io.on("connection", (socket) =>{
-  console.log("user connected")
+  // console.log("user connected")
   let userId = socket.handshake.query.userId;
   console.log(userId);
   
@@ -58,8 +58,8 @@ io.on("connection", (socket) =>{
 
 
   socket.on('conversation-message', (msg) => {
-    console.log("receive")
-    console.log(msg);
+    // console.log("receive")
+    // console.log(msg);
 
     notificateTo = msg.to
     mssgFrom = msg.from
