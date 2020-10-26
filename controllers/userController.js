@@ -8,6 +8,7 @@ const tokenManager = require("../utils/tokenManager")
 const NotFoundError = require("../aplicationErrors/NotFoundError")
 const GeneralError = require("../aplicationErrors/GeneralError")
 const { json } = require("body-parser")
+const { formatUserToSend } = require("../models/userServices")
 
 
 
@@ -20,7 +21,8 @@ async function  getChatList(req,res, next) {
             return res.status(400)
             
         const users =  await userServices.findAnotherUsers(req.decoded.id)
-        return res.status(200).json({users:users} )
+        const formatedUsers = users.map(user => formatUserToSend(user))
+        return res.status(200).json({users:formatedUsers} )
 
     }catch(err){
         console.error(err)
