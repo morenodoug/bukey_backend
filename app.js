@@ -60,6 +60,19 @@ io.on("connection", (socket) =>{
   socket.on('conversation-message', (msg) => {
     console.log("receive")
     console.log(msg);
+
+    notificateTo = msg.to
+    mssgFrom = msg.from
+    messageText = msg.message
+
+    if(connectedUsers[notificateTo]){
+
+      socketId = connectedUsers[notificateTo].id
+      console.log(`notificar a ${socketId}`)
+      socket.broadcast.to(socketId).emit('notification', {notificateTo, userId:mssgFrom, message:messageText});      
+    }
+
+
   });
 })
 
